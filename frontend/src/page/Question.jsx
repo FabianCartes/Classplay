@@ -16,7 +16,7 @@ function Question() {
   const fetchQuestions = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:4000/question/GetQuestionBySection/${sectionId}`, {
+      const response = await fetch(`https://classplay.cl/api/question/GetQuestionBySection/${sectionId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -32,7 +32,7 @@ function Question() {
   const fetchSection = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:4000/section/GetSection/${sectionId}`, {
+      const response = await fetch(`https://classplay.cl/api/section/GetSection/${sectionId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -127,7 +127,7 @@ function Question() {
         optionId: optionId,
       }));
   
-      const response = await fetch("http://localhost:4000/user_answer/SaveUserAnswer", {
+      const response = await fetch("https://classplay.cl/api/user_answer/SaveUserAnswer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -205,7 +205,7 @@ function Question() {
 
                 {question.imageUrl && (
                   <img
-                    src={`http://localhost:4000${question.imageUrl}`}
+                    src={`https://classplay.cl/api/${question.imageUrl}`}
                     alt="Pregunta"
                     className="mt-2 rounded-lg w-full max-w-md mx-auto"
                   />

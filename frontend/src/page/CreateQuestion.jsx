@@ -49,7 +49,7 @@ function CreateQuestion() {
   const fetchSectionData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:4000/section/GetSection/${sectionId}`, {
+      const response = await fetch(`https://classplay.cl/api/section/GetSection/${sectionId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -68,7 +68,7 @@ function CreateQuestion() {
       });
 
       // Cargar las preguntas de la sección
-      const questionsResponse = await fetch(`http://localhost:4000/question/GetQuestionBySection/${sectionId}`, {
+      const questionsResponse = await fetch(`https://classplay.cl/api/question/GetQuestionBySection/${sectionId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -184,7 +184,7 @@ function CreateQuestion() {
       try {
         // Enviar la solicitud DELETE al servidor
         const token = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:4000/option/DeleteOption/${optionToRemove.id}`, {
+        const response = await fetch(`https://classplay.cl/api/option/DeleteOption/${optionToRemove.id}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -264,8 +264,8 @@ function CreateQuestion() {
     const token = localStorage.getItem("token");
     const response = await fetch(
       editingQuestionId
-        ? `http://localhost:4000/question/UpdateQuestion/${editingQuestionId}`
-        : "http://localhost:4000/question/CreateQuestion",
+        ? `https://classplay.cl/api/question/UpdateQuestion/${editingQuestionId}`
+        : "https://classplay.cl/api/question/CreateQuestion",
       {
         method: editingQuestionId ? "PUT" : "POST",
         headers: {
@@ -293,7 +293,7 @@ function CreateQuestion() {
   const handleSaveTotalTime = async () => {
     const token = localStorage.getItem("token");
   
-    const response = await fetch(`http://localhost:4000/section/UpdateSection/${sectionId}`, {
+    const response = await fetch(`https://classplay.cl/api/section/UpdateSection/${sectionId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -344,7 +344,7 @@ function CreateQuestion() {
     });
 
     if (result.isConfirmed) {
-      const response = await fetch(`http://localhost:4000/question/DeleteQuestion/${questionId}`, {
+      const response = await fetch(`https://classplay.cl/api/question/DeleteQuestion/${questionId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -380,7 +380,7 @@ function CreateQuestion() {
     formData.append("image", imageFile);
   
     const token = localStorage.getItem("token");
-    const response = await fetch(`http://localhost:4000/question/UpdateQuestion/${editingQuestionId}`, {
+    const response = await fetch(`https://classplay.cl/api/question/UpdateQuestion/${editingQuestionId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -404,7 +404,7 @@ function CreateQuestion() {
         return;
       }
   
-      const response = await fetch(`http://localhost:4000/question/RemoveImage/${questionId}`, {
+      const response = await fetch(`https://classplay.cl/api/question/RemoveImage/${questionId}`, {
         method: "DELETE",
       });
   
@@ -513,7 +513,7 @@ function CreateQuestion() {
 
                       {question.imageUrl && (
                         <img
-                          src={`http://localhost:4000${question.imageUrl}`}
+                          src={`https://classplay.cl/api/${question.imageUrl}`}
                           alt="Pregunta"
                           className="mt-2 w-full max-h-80 object-contain" // Ajusté max-h-80 para que la imagen sea más grande
                         />

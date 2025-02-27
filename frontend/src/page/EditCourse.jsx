@@ -42,7 +42,7 @@ function EditCourse() {
 
       // Obtener datos del curso
       const courseResponse = await fetch(
-        `http://localhost:4000/course/GetCourse/${courseId}`,
+        `https://classplay.cl/api/course/GetCourse/${courseId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ function EditCourse() {
 
       // Obtener secciones asociadas al curso
       const sectionsResponse = await fetch(
-        `http://localhost:4000/section/GetSectionsByCourse/${courseId}`,
+        `https://classplay.cl/api/section/GetSectionsByCourse/${courseId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -105,7 +105,7 @@ function EditCourse() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:4000/course/UpdateCourse/${courseId}`,
+        `https://classplay.cl/api/course/UpdateCourse/${courseId}`,
         {
           method: "PUT",
           headers: {
@@ -134,7 +134,7 @@ function EditCourse() {
   
       console.log("Sección a guardar:", newSection);
   
-      const response = await fetch("http://localhost:4000/section/CreateSection", {
+      const response = await fetch("https://classplay.cl/api/section/CreateSection", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -262,7 +262,7 @@ const editSection = (id) => {
       );
 
       const token = localStorage.getItem("token");
-      fetch(`http://localhost:4000/section/UpdateSection/${id}`, {
+      fetch(`https://classplay.cl/api/section/UpdateSection/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -299,7 +299,7 @@ const editSection = (id) => {
         setSections(updatedSections);
 
         const token = localStorage.getItem("token");
-        fetch(`http://localhost:4000/section/DeleteSection/${id}`, {
+        fetch(`https://classplay.cl/api/section/DeleteSection/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -454,22 +454,22 @@ const editSection = (id) => {
                       </a>
                     </p>
                   )}
-                  <div className="mt-2 flex space-x-4">
+                  <div className="mt-2 flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
                     <button
                       onClick={() => editSection(section.id)}
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md"
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded-md md:text-base md:px-4 md:py-2"
                     >
                       Editar
                     </button>
                     <button
                       onClick={() => deleteSection(section.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+                      className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded-md md:text-base md:px-4 md:py-2"
                     >
                       Eliminar
                     </button>
                     <button
                       onClick={() => navigate(`/CreateQuestion/${section.id}`)}
-                      className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-md"
+                      className="bg-purple-500 hover:bg-purple-600 text-white text-sm px-3 py-1 rounded-md md:text-base md:px-4 md:py-2"
                     >
                       Agregar Pregunta
                     </button>

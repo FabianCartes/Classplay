@@ -21,7 +21,7 @@ function Results() {
     const fetchResults = async () => {
       try {
         // 🔹 Obtener todas las preguntas de la sección
-        const questionsResponse = await fetch(`http://localhost:4000/question/GetQuestionBySection/${sectionId}`, {
+        const questionsResponse = await fetch(`https://classplay.cl/api/question/GetQuestionBySection/${sectionId}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         const questionsData = await questionsResponse.json();
@@ -35,7 +35,7 @@ function Results() {
         setTotalScore(totalScoreCalc);
 
         // 🔹 Obtener respuestas del usuario
-        const userAnswersResponse = await fetch(`http://localhost:4000/user_answer/GetUserAnswersBySection/${user.id}/${sectionId}`, {
+        const userAnswersResponse = await fetch(`https://classplay.cl/api/user_answer/GetUserAnswersBySection/${user.id}/${sectionId}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         const userAnswersData = await userAnswersResponse.json();
@@ -102,7 +102,7 @@ function Results() {
 
   const handleReturnToCourse = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/section/GetCourseIdBySection/${sectionId}`, {
+      const response = await fetch(`https://classplay.cl/api/section/GetCourseIdBySection/${sectionId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 

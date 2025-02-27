@@ -23,7 +23,7 @@ function HomeNormal() {
         
         if (endDate <= todayEnd && course.isPublic) {
           try {
-            const response = await fetch(`http://localhost:4000/course/toggleVisibility/${course.id}`, {
+            const response = await fetch(`https://classplay.cl/api/course/toggleVisibility/${course.id}`, {
               method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
@@ -53,7 +53,7 @@ function HomeNormal() {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:4000/course/GetPublicCourses", {
+      const response = await fetch("https://classplay.cl/api/course/GetPublicCourses", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,7 +74,7 @@ function HomeNormal() {
   const fetchEnrolledCourses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:4000/inscription/MyInscriptions", {
+      const response = await fetch("https://classplay.cl/api/inscription/MyInscriptions", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -237,7 +237,7 @@ function HomeNormal() {
     try {
       const token = localStorage.getItem("token");
   
-      const response = await fetch("http://localhost:4000/inscription/Enroll", {
+      const response = await fetch("https://classplay.cl/api/inscription/Enroll", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -281,7 +281,7 @@ function HomeNormal() {
     try {
       const token = localStorage.getItem("token");
   
-      const response = await fetch(`http://localhost:4000/inscription/Unenroll/${courseId}`, {
+      const response = await fetch(`https://classplay.cl/api/inscription/Unenroll/${courseId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

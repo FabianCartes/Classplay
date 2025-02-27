@@ -12,7 +12,7 @@ function HomeMod() {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:4000/course/GetCourse/", {
+      const response = await fetch("https://classplay.cl/api/course/GetCourse/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,7 +45,7 @@ function HomeMod() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:4000/course/DeleteCourse/${courseId}`, {
+      const response = await fetch(`https://classplay.cl/api/course/DeleteCourse/${courseId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ function HomeMod() {
   const toggleCourseVisibility = async (courseId) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:4000/course/toggleVisibility/${courseId}`, {
+      const response = await fetch(`https://classplay.cl/api/course/toggleVisibility/${courseId}`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -211,20 +211,20 @@ function HomeMod() {
                         </label>
                       </div>
 
-                      <div className="flex space-x-4">
-                        <button
-                          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
-                          onClick={() => handleEditCourse(course.id)}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-md"
-                          onClick={() => handleDeleteCourse(course.id)}
-                        >
-                          Eliminar
-                        </button>
-                      </div>
+                      <div className="flex flex-col md:flex-row space-y-2 md:space-x-4 md:space-y-0">
+                          <button
+                            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
+                            onClick={() => handleEditCourse(course.id)}
+                          >
+                            Editar
+                          </button>
+                          <button
+                            className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-md"
+                            onClick={() => handleDeleteCourse(course.id)}
+                          >
+                            Eliminar
+                          </button>
+                        </div>
                     </div>
                   </li>
                 );

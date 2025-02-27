@@ -21,7 +21,7 @@ function Congratulation() {
   useEffect(() => {
     const fetchSectionName = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/section/GetSection/${sectionId}`);
+        const response = await fetch(`https://classplay.cl/api/section/GetSection/${sectionId}`);
         const data = await response.json();
         if (data && data.name) {
           setSectionName(data.name);

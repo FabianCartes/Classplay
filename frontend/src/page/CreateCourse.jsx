@@ -59,7 +59,7 @@ function CreateCourse() {
         return;
       }
 
-      const response = await fetch("http://localhost:4000/course/CreateCourse", {
+      const response = await fetch("https://classplay.cl/api/course/CreateCourse", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

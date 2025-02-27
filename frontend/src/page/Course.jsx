@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'; // Para obtener el ID del curso de
 import Swal from 'sweetalert2'; // Importa SweetAlert2
 import { useNavigate } from 'react-router-dom';
 import AuthContext from "../context/AuthContext";
+import { FaArrowLeft } from "react-icons/fa";
 
 function Course() {
   const { courseId } = useParams(); // Obtener el ID del curso desde la URL
@@ -38,7 +39,7 @@ function Course() {
       const token = localStorage.getItem('token');
   
       // Obtener los detalles del curso
-      const courseResponse = await fetch(`http://localhost:4000/course/GetCourse/${courseId}`, {
+      const courseResponse = await fetch(`https://classplay.cl/api/course/GetCourse/${courseId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
   
@@ -48,7 +49,7 @@ function Course() {
       setCourse(courseData);
   
       // Obtener las secciones del curso
-      const sectionResponse = await fetch(`http://localhost:4000/section/GetSectionsByCourse/${courseId}`, {
+      const sectionResponse = await fetch(`https://classplay.cl/api/section/GetSectionsByCourse/${courseId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
   
@@ -59,7 +60,7 @@ function Course() {
       // Para cada sección, obtener sus preguntas
       const sectionsWithQuestions = await Promise.all(
         sectionsData.map(async (section) => {
-          const questionResponse = await fetch(`http://localhost:4000/question/GetQuestionBySection/${section.id}`, {
+          const questionResponse = await fetch(`https://classplay.cl/api/question/GetQuestionBySection/${section.id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
   
@@ -114,13 +115,13 @@ function Course() {
     </header>
 
       <main className="px-6 py-10">
-        <section className="bg-white text-gray-800 p-6 rounded-lg shadow-lg">
-        <button
-        onClick={() => navigate('/home')} // Redirige a la página de inicio
-        className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-md font-semibold shadow-lg mt-6"
-        >
-        Volver atrás
-        </button>
+      <section className="bg-white text-gray-800 p-6 pt-12 rounded-lg shadow-lg relative">
+      <button
+        onClick={() => navigate('/home')}
+        className="absolute top-6 left-6 text-gray-600 hover:text-gray-800 text-2xl"
+      >
+        <FaArrowLeft />
+      </button>
           <h2 className="text-4xl font-bold text-center mb-4">{course.title}</h2>
           <p className="text-lg text-gray-600 text-center mb-4">{course.description}</p>
           <p className="text-center text-gray-500">Categoría: <strong>{course.category || 'No definida'}</strong></p>
@@ -132,57 +133,59 @@ function Course() {
               <ul className="space-y-4">
               {sections.map((section) => (
                 <li key={section.id} className="p-4 border border-gray-300 rounded-lg bg-gray-50 shadow-sm relative">
-                  <h4 className="text-xl font-bold text-gray-700">{section.name}</h4>
-                  <p className="text-gray-600">{section.description}</p>
-            
-                  {/* Miniatura del video */}
-                  {section.videoLink && (
-                    <div className="mt-4 flex flex-col items-center">
-                      <a href={section.videoLink} target="_blank" rel="noopener noreferrer">
-                        <img
-                          src={getVideoThumbnail(section.videoLink)}
-                          alt="Miniatura del video"
-                          className="w-50 h-50 object-cover rounded-md shadow-md cursor-pointer"
-                        />
-                      </a>
-                      <p className="mt-2 mb-6 text-lg text-gray-600 text-center">Haz clic para ver el video</p>
-                    </div>
-                  )}
-            
-                  {/* Tiempo de la sección en la esquina inferior izquierda */}
-                  <div className="absolute bottom-2 left-2 text-base text-gray-700 font-semibold">
-                    Tiempo de la sección: 
-                    <span className="bg-red-500 text-white px-2 py-1 rounded-md ml-2">
-                        {section.totalTime ? `${section.totalTime} min` : "Sin tiempo"}
-                    </span>
+                <h4 className="text-xl font-bold text-gray-700">{section.name}</h4>
+                <p className="text-gray-600">{section.description}</p>
+              
+                {/* Miniatura del video */}
+                {section.videoLink && (
+                  <div className="mt-4 flex flex-col items-center">
+                    <a href={section.videoLink} target="_blank" rel="noopener noreferrer">
+                      <img
+                        src={getVideoThumbnail(section.videoLink)}
+                        alt="Miniatura del video"
+                        className="w-50 h-50 object-cover rounded-md shadow-md cursor-pointer"
+                      />
+                    </a>
+                    <p className="mt-2 mb-6 text-lg text-gray-600 text-center">Haz clic para ver el video</p>
                   </div>
-
-                  {section.questions && section.questions.length > 0 && (
-                    <div className="flex justify-end mt-4">
-                      <button
-                        className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md font-semibold shadow-lg"
-                        onClick={() => {
-                          Swal.fire({
-                            title: "⚠️ Advertencia",
-                            text: section.totalTime && section.totalTime > 0 
-                              ? `¿Estás seguro de empezar a responder? Tienes ${section.totalTime} minutos para completar las preguntas.` 
-                              : "¿Estás seguro de empezar a responder?",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonText: "Sí, empezar",
-                            cancelButtonText: "Cancelar",
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              navigate(`/Question/${section.id}`);
-                            }
-                          });
-                        }}
-                      >
-                        Empezar
-                      </button>
+                )}
+              
+                {/* Contenedor de tiempo y botón de empezar */}
+                {section.questions && section.questions.length > 0 && (
+                  <div className="mt-4 flex flex-col items-start sm:flex-row sm:justify-between sm:items-center">
+                    {/* Tiempo de la sección */}
+                    <div className="text-base text-gray-700 font-semibold mb-2 sm:mb-0">
+                      Tiempo de la sección: 
+                      <span className="bg-red-500 text-white px-2 py-1 rounded-md ml-2">
+                        {section.totalTime ? `${section.totalTime} min` : "Ninguno"}
+                      </span>
                     </div>
-                  )}
-                </li>
+              
+                    {/* Botón de empezar */}
+                    <button
+                      className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md font-semibold shadow-lg w-full sm:w-auto"
+                      onClick={() => {
+                        Swal.fire({
+                          title: "⚠️ Advertencia",
+                          text: section.totalTime && section.totalTime > 0 
+                            ? `¿Estás seguro de empezar a responder? Tienes ${section.totalTime} minutos para completar las preguntas.` 
+                            : "¿Estás seguro de empezar a responder?",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonText: "Sí, empezar",
+                          cancelButtonText: "Cancelar",
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            navigate(`/Question/${section.id}`);
+                          }
+                        });
+                      }}
+                    >
+                      Empezar
+                    </button>
+                  </div>
+                )}
+              </li>
               ))}
             </ul>            
             ) : (
