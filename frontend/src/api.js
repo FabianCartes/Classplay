@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Crea una instancia de Axios con configuración predeterminada
 const api = axios.create({
-  baseURL: 'http://localhost:4000', 
+  baseURL: 'https://classplay.cl/api/', 
   headers: {
     'Content-Type': 'application/json',
   },

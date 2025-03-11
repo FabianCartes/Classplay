@@ -53,45 +53,52 @@ function Congratulation() {
   };
 
   return (
-    <div className="min-h-screen bg-green-100 flex flex-col">
-      {/* Barra superior */}
-      <header className="bg-white text-white py-4 shadow-2xl fixed top-0 left-0 w-full z-20">
+    <div className="min-h-screen bg-gradient-to-r from-[#6d90bd] via-[#7fb2d6] to-[#76bde4] flex flex-col relative overflow-hidden">
+      {/* Barra superior con transparencia y efecto sutil */}
+      <header className="bg-white/70 backdrop-blur-md text-white py-4 shadow-lg fixed top-0 left-0 w-full z-20">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-          {/* Puedes agregar otros elementos a la barra, como un botón de salir */}
           <button 
             onClick={() => navigate('/home')} 
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-semibold"
+            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md transition duration-300"
           >
-            Volver al inicio
+            ⬅ Volver al inicio
           </button>
         </div>
       </header>
-
+  
       {/* Contenedor principal */}
-      <div className="flex-1 flex flex-col justify-center items-center text-center py-16 mt-20">
-        {/* Contenedor canvas para confeti */}
-        <canvas id="confetti-canvas" className="absolute top-0 left-0 w-full h-full z-10"></canvas>
+<div className="flex-1 flex flex-col justify-center items-center text-center py-20 mt-20 relative z-10">
+  {/* Efecto de confeti en fondo */}
+  <canvas id="confetti-canvas" className="absolute top-0 left-0 w-full h-full z-0 opacity-60"></canvas>
 
-        <h1 className="text-5xl font-bold text-green-800 z-20">¡FELICIDADES, {userName || "Usuario"}!</h1> {/* Aquí se usa userName */}
-        <p className="mt-4 text-lg text-gray-700 z-20">
-          Completaste las preguntas de la sección: <span className="font-semibold">{sectionName}</span>
-        </p>
+  {/* Mensaje de felicitaciones */}
+  <h1 className="text-5xl font-extrabold text-white drop-shadow-lg animate-fadeIn"
+    dangerouslySetInnerHTML={{ __html: `🎉 ¡FELICIDADES, ${userName || "Usuario"}! 🎉` }}
+  />
 
-        <p className="mt-6 text-lg text-gray-700 z-20">
-          ¿Te gustaría ver tus resultados?
-        </p>
+  <p className="mt-4 text-lg text-gray-100 drop-shadow-md animate-fadeIn"
+    dangerouslySetInnerHTML={{ __html: `Has completado las preguntas de la sección: <span className="font-semibold text-yellow-300">${sectionName}</span>` }}
+  />
 
-        <div className="mt-6 z-20">
-          <button 
-            onClick={handleViewResults} 
-            className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
-          >
-            Ver resultados
-          </button>
-        </div>
-      </div>
+  {/* Pregunta sobre ver resultados */}
+  <p className="mt-6 text-lg text-gray-200 animate-fadeInSlow"
+    dangerouslySetInnerHTML={{ __html: "¿Quieres ver tus resultados?" }}
+  />
+
+  {/* Botón con gradiente y animación */}
+  <div className="mt-6 animate-bounce">
+    <button 
+      onClick={handleViewResults} 
+      className="px-8 py-3 bg-gradient-to-r from-indigo-600 to-blue-500 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+    >
+      📊 Ver resultados
+    </button>
+  </div>
+</div>
+
     </div>
   );
+  
 }
 
 export default Congratulation;

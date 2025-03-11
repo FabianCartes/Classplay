@@ -45,17 +45,19 @@ const getCourses = async () => {
 // Obtener curso por ID
 const getCourseById = async (id) => {
   try {
-    const courseRepository = AppDataSource.getRepository(Course); // Usar la conexión activa
-    const course = await courseRepository.findOne({ where: { id }, relations: ["createdBy"] }); // Obtener curso por ID con la relación de usuario
+    const courseRepository = AppDataSource.getRepository(Course);
+    const course = await courseRepository.findOne({ where: { id: parseInt(id, 10) }, relations: ["createdBy"] });
+
     if (!course) {
-      return { error: "Curso no encontrado" }; // Si no existe el curso
+      return { error: "Curso no encontrado" };
     }
     return course;
   } catch (error) {
     console.error("Error al obtener el curso:", error);
-    return { error: error.message }; // Devuelve el error para depuración
+    return { error: error.message };
   }
 };
+
 
 // Actualizar curso
 const updateCourse = async (id, courseData) => {
@@ -80,35 +82,31 @@ const updateCourse = async (id, courseData) => {
 // Eliminar curso
 const deleteCourse = async (id) => {
   try {
-    const courseRepository = AppDataSource.getRepository(Course); // Usar la conexión activa
-    const result = await courseRepository.delete(id); // Eliminar el curso por ID
+    const courseRepository = AppDataSource.getRepository(Course);
+    const result = await courseRepository.delete(parseInt(id, 10));
 
     if (result.affected === 0) {
-      return { error: "Curso no encontrado" }; // Si no se eliminó ningún curso
+      return { error: "Curso no encontrado" };
     }
 
-    return { message: "Curso eliminado exitosamente" }; // Si se eliminó correctamente
+    return { message: "Curso eliminado exitosamente" };
   } catch (error) {
     console.error("Error al eliminar el curso:", error);
-    return { error: error.message }; // Devuelve el error para depuración
+    return { error: error.message };
   }
 };
 
+
 const toggleCourseVisibility = async (courseId) => {
   try {
-    const courseRepository = AppDataSource.getRepository(Course); // Usar el repositorio de la entidad Course
-
-    // Buscar el curso por su ID
-    const course = await courseRepository.findOne({ where: { id: courseId } });
+    const courseRepository = AppDataSource.getRepository(Course);
+    const course = await courseRepository.findOne({ where: { id: parseInt(courseId, 10) } });
 
     if (!course) {
-      return { error: "Curso no encontrado." }; // Si no se encuentra el curso, devuelve un error
+      return { error: "Curso no encontrado." };
     }
 
-    // Alternar el estado de visibilidad
-    course.isPublic = !course.isPublic;
-
-    // Guardar los cambios en la base de datos
+    course.isPublic = Boolean(!course.isPublic);
     const updatedCourse = await courseRepository.save(course);
 
     return updatedCourse;
@@ -117,6 +115,7 @@ const toggleCourseVisibility = async (courseId) => {
     throw new Error("No se pudo alternar la visibilidad del curso.");
   }
 };
+
 
 
 // Obtener solo los cursos públicos

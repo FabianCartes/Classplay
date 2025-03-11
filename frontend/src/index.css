@@ -1,4 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "react-quill/dist/quill.snow.css";
+@import "animate.css";
+
+.ql-font-arial {
+    font-family: Arial, sans-serif !important;
+}
+.ql-font-comic-sans {
+    font-family: "Comic Sans MS", cursive, sans-serif !important;
+}
+.ql-font-courier {
+    font-family: "Courier New", Courier, monospace !important;
+}
+.ql-font-georgia {
+    font-family: Georgia, serif !important;
+}
+.ql-font-helvetica {
+    font-family: Helvetica, sans-serif !important;
+}
+.ql-font-times-new-roman {
+    font-family: "Times New Roman", Times, serif !important;
+}
 

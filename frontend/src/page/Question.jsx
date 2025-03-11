@@ -179,17 +179,17 @@ function Question() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-100 via-blue-100 to-gray-200 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-r from-[#6d90bd] via-[#7fb2d6] to-[#76bde4] text-gray-800">
       <header className="bg-white shadow-md p-4 text-center flex justify-between items-center">
         <button 
           onClick={() => navigate(-1)} 
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
+          className="px-4 py-2 bg-[#4dcfec] text-white rounded-lg shadow-md hover:bg-[#4fb1c7]"
         >
           ← Volver
         </button>
-        <h1 className="text-3xl font-bold text-gray-700 flex-1 text-center">{section?.name || "Cargando..."}</h1>
+        <h1 className="text-3xl font-bold text-[#1d293f] flex-1 text-center" dangerouslySetInnerHTML={{ __html: section?.name || "Cargando..." }} />
         {timeRemaining !== null && (
-        <div className="fixed top-4 right-4 bg-blue-600 text-white text-lg font-semibold px-4 py-2 rounded-full shadow-lg">
+        <div className="fixed top-4 right-4 bg-[#4442c1] text-white text-lg font-semibold px-4 py-2 rounded-full shadow-lg">
           ⏳ {formatTime(timeRemaining)}
         </div>
       )}
@@ -239,7 +239,7 @@ function Question() {
           <div className="text-center mt-6">
             <button 
               onClick={handleSubmitAnswers}
-              className="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300"
+              className="px-6 py-3 bg-[#4dcfec] text-white font-semibold rounded-lg shadow-md hover:bg-[#4fb1c7] transition duration-300"
             >
               Enviar respuestas
             </button>

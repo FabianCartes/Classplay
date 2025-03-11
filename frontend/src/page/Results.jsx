@@ -142,82 +142,89 @@ function Results() {
 
   const hoverEffect = {
     scale: 1.1,
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+    boxShadow: "0px 4px 10px rgba(100, 150, 200, 0.3)",
     transition: { duration: 0.3 }
   };
   
 
   return (
-    <div className="min-h-screen flex flex-col bg-transparent relative">
+    <div className="min-h-screen flex flex-col bg-transparent relative overflow-hidden">
+      {/* 🌧️ Efecto de lluvia */}
       <RainEffect />
-      <header className="bg-white text-gray-700 py-4 shadow-md fixed top-0 left-0 w-full z-20">
+  
+      {/* Barra superior con transparencia */}
+      <header className="bg-white/70 backdrop-blur-md text-gray-700 py-4 shadow-lg fixed top-0 left-0 w-full z-20">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           <button
             onClick={handleReturnToCourse}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-semibold"
+            className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:scale-105 text-white px-5 py-2 rounded-lg font-semibold shadow-md transition-all duration-300"
           >
-            Volver al curso
+            ⬅ Volver al curso
           </button>
         </div>
       </header>
-
+  
+      {/* Contenedor principal */}
       <div className="flex-1 flex flex-col items-center justify-center p-6 mt-20 relative z-10">
-        <h1 className="text-4xl font-bold text-gray-600 mb-6">TUS RESULTADOS</h1>
-
-        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-5xl flex flex-col md:flex-row gap-6">
-            {/* 🔹 Sección izquierda - Preguntas */}
-            <div className="w-full md:w-1/2 flex flex-col items-center">
-              <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">Preguntas</h2>
-              <div className="space-y-3 text-left w-full">
-                <motion.p 
-                  whileHover={{ scale: 1.1, transition: { duration: 0.3 } }} 
-                  className="text-lg font-semibold text-gray-700 bg-gray-200 px-4 py-2 rounded-lg">
-                  Total Preguntas: <span className="font-bold">{totalQuestions}</span>
-                </motion.p>
-                <motion.p 
-                  whileHover={{ scale: 1.1, transition: { duration: 0.3 } }} 
-                  className="text-lg font-semibold text-green-500 bg-green-200 px-4 py-2 rounded-lg">
-                  Correctas: <span className="font-bold">{correctAnswers}</span>
-                </motion.p>
-                <motion.p 
-                  whileHover={{ scale: 1.1, transition: { duration: 0.3 } }} 
-                  className="text-lg font-semibold text-red-500 bg-red-200 px-4 py-2 rounded-lg">
-                  Falladas o Nulas: <span className="font-bold">{incorrectAnswers}</span>
-                </motion.p>
-              </div>
-              <div className="mt-4 flex justify-center h-[300px] w-full">
-                <Pie data={data} />
-              </div>
-              <p className="mt-4 text-lg font-semibold text-gray-800 text-center">{feedbackForQuestions()}</p>
+        <h1 className="text-5xl font-extrabold text-white drop-shadow-lg animate-fadeIn">
+          🏆 TUS RESULTADOS 🏆
+        </h1>
+  
+        {/* Contenedor de resultados */}
+        <div className="bg-white/80 p-8 rounded-xl shadow-xl w-full max-w-5xl flex flex-col md:flex-row gap-8 mt-6 animate-fadeInSlow">
+          
+          {/* 🔹 Sección izquierda - Preguntas */}
+          <div className="w-full md:w-1/2 flex flex-col items-center">
+            <h2 className="text-3xl font-bold text-gray-700 mb-4 text-center">📋 Preguntas</h2>
+            <div className="space-y-4 text-left w-full">
+              <motion.p 
+                whileHover={{ scale: 1.05 }} 
+                className="text-lg font-semibold text-gray-700 bg-gray-200 px-5 py-3 rounded-lg shadow-md">
+                Total Preguntas: <span className="font-bold">{totalQuestions}</span>
+              </motion.p>
+              <motion.p 
+                whileHover={{ scale: 1.05 }} 
+                className="text-lg font-semibold text-green-600 bg-green-200 px-5 py-3 rounded-lg shadow-md">
+                Correctas: <span className="font-bold">{correctAnswers}</span>
+              </motion.p>
+              <motion.p 
+                whileHover={{ scale: 1.05 }} 
+                className="text-lg font-semibold text-red-600 bg-red-200 px-5 py-3 rounded-lg shadow-md">
+                Falladas o Nulas: <span className="font-bold">{incorrectAnswers}</span>
+              </motion.p>
             </div>
-
-            {/* 🔹 Sección derecha - Puntajes */}
-            <div className="w-full md:w-1/2 flex flex-col items-center">
-              <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">Puntajes</h2>
-              <div className="space-y-3 text-left w-full">
-                <motion.p 
-                  whileHover={{ scale: 1.1, transition: { duration: 0.3 } }} 
-                  className="text-lg font-semibold text-blue-500 bg-blue-200 px-4 py-2 rounded-lg">
-                  Puntaje Total: <span className="font-bold">{totalScore}</span>
-                </motion.p>
-                <motion.p 
-                  whileHover={{ scale: 1.1, transition: { duration: 0.3 } }} 
-                  className="text-lg font-semibold text-purple-500 bg-purple-200 px-4 py-2 rounded-lg">
-                  Puntaje Obtenido: <span className="font-bold">{obtainedScore}</span>
-                </motion.p>
-              </div>
-              <div className="mt-4 md:mt-20 flex justify-center w-full h-[280px]">
-                <Bar data={scoreData} />
-              </div>
-              <p className="mt-4 text-lg font-semibold text-gray-800 text-center">{feedbackForScore()}</p>
+            <div className="mt-6 flex justify-center h-[300px] w-full">
+              <Pie data={data} />
             </div>
+            <p className="mt-6 text-lg font-semibold text-gray-800 text-center">{feedbackForQuestions()}</p>
           </div>
-
-
-
+  
+          {/* 🔹 Sección derecha - Puntajes */}
+          <div className="w-full md:w-1/2 flex flex-col items-center">
+            <h2 className="text-3xl font-bold text-gray-700 mb-4 text-center">📊 Puntajes</h2>
+            <div className="space-y-4 text-left w-full">
+              <motion.p 
+                whileHover={{ scale: 1.05 }} 
+                className="text-lg font-semibold text-blue-600 bg-blue-200 px-5 py-3 rounded-lg shadow-md">
+                Puntaje Total: <span className="font-bold">{totalScore}</span>
+              </motion.p>
+              <motion.p 
+                whileHover={{ scale: 1.05 }} 
+                className="text-lg font-semibold text-purple-600 bg-purple-200 px-5 py-3 rounded-lg shadow-md">
+                Puntaje Obtenido: <span className="font-bold">{obtainedScore}</span>
+              </motion.p>
+            </div>
+            <div className="mt-6 md:mt-16 flex justify-center w-full h-[280px]">
+              <Bar data={scoreData} />
+            </div>
+            <p className="mt-6 text-lg font-semibold text-gray-800 text-center">{feedbackForScore()}</p>
+          </div>
+  
+        </div>
       </div>
     </div>
   );
+  
 }
 
 export default Results;

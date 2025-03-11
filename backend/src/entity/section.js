@@ -1,5 +1,5 @@
 import { EntitySchema } from "typeorm";
-import Course from "./course.js"; // Asegúrate de que la ruta sea correcta
+import Course from "./course.js"; // Importar correctamente
 
 const Section = new EntitySchema({
   name: "Section",
@@ -9,25 +9,30 @@ const Section = new EntitySchema({
       primary: true,
       type: "int",
       generated: true,
+      unsigned: true, // IDs sin signo en MySQL
     },
     name: {
       type: "varchar",
+      length: 255, // Definir longitud máxima para el nombre
       nullable: false,
     },
     description: {
-      type: "text",
+      type: "varchar",
+      length: 1000, // Mejor rendimiento en MySQL que "text"
       nullable: true,
     },
     order: {
       type: "int",
+      unsigned: true, // `order` no puede ser negativo
       default: 1,
     },
     videoLink: {
       type: "varchar",
+      length: 500, // Limitar la longitud de la URL del video
       nullable: true,
     },
-    totalTime: { // Tiempo total para responder todas las preguntas
-      type: "int", // Guardará el tiempo en minutos
+    totalTime: {
+      type: "int", // Tiempo total en minutos
       nullable: true,
     },
   },
@@ -40,6 +45,5 @@ const Section = new EntitySchema({
     },
   },
 });
-
 
 export default Section;

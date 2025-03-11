@@ -7,6 +7,7 @@ const {
   saveUserAnswerController,
   getUserAnswersController,
   getUserAnswersBySectionController,
+  getTopUsersByCourseController,
 } = userAnswerController;
 
 // 📌 Ruta para guardar o actualizar una respuesta del usuario
@@ -17,5 +18,8 @@ router.get("/GetUserAnswers/:userId", verifyToken, getUserAnswersController);
 
 // 📌 Ruta para obtener respuestas de un usuario en una sección específica
 router.get("/GetUserAnswersBySection/:userId/:sectionId", verifyToken, getUserAnswersBySectionController);
+
+// 🔥 Ruta para obtener el Top de Usuarios por Curso
+router.get("/GetTopUsersByCourse/:courseId", verifyToken, getTopUsersByCourseController);
 
 export default router;

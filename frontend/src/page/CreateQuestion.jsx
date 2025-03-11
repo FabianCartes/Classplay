@@ -421,10 +421,10 @@ function CreateQuestion() {
   
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-100 via-blue-100 to-gray-200 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-r from-[#6d90bd] via-[#7fb2d6] to-[#76bde4] text-[#1d293f]">
       <header className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-700">Crear Pregunta</h1>
+          <h1 className="text-2xl font-bold text-[#1d293f]">Crear Pregunta</h1>
           <button
               onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-semibold"
@@ -438,7 +438,7 @@ function CreateQuestion() {
         <div className="max-w-7xl mx-auto">
           <button
             onClick={() => navigate(-1)}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md font-semibold shadow-lg"
+            className="bg-[#0A1F44] hover:bg-[#0c1320] text-white px-4 py-2 rounded-md font-semibold shadow-lg"
           >
             Volver Atrás
           </button>
@@ -450,51 +450,54 @@ function CreateQuestion() {
           ) : (
             <>
               <div className="w-full">
-                <h2 className="text-4xl font-bold text-gray-700 mb-4">{sectionData.name}</h2>
-                <p className="text-lg text-gray-600 mb-6">{sectionData.description}</p>
+              <h2 className="text-4xl font-bold text-gray-700 mb-4"
+                dangerouslySetInnerHTML={{ __html: sectionData.name }}
+              />
 
-                {sectionData.videoLink && (
-                  <div className="mb-6 flex flex-col items-center">
-                    <a
-                      href={sectionData.videoLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-center"
-                    >
-                      <img
-                        src={`https://img.youtube.com/vi/${new URL(sectionData.videoLink).searchParams.get("v")}/hqdefault.jpg`}
-                        alt="Miniatura del video"
-                        className="w-full max-w-md mx-auto rounded-lg shadow-md"
-                      />
-                      <p className="text-gray-700 font-semibold mt-2">Haz click para ver el video</p>
-                    </a>
-                  </div>
-                )}
+              <p className="text-lg text-gray-600 mb-6"
+                dangerouslySetInnerHTML={{ __html: sectionData.description }}
+              />
 
+              {sectionData.videoLink && (
+                <div className="mb-6 flex flex-col items-center">
+                  <a
+                    href={sectionData.videoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-center"
+                  >
+                    <img
+                      src={`https://img.youtube.com/vi/${new URL(sectionData.videoLink).searchParams.get("v")}/hqdefault.jpg`}
+                      alt="Miniatura del video"
+                      className="w-full max-w-md mx-auto rounded-lg shadow-md"
+                    />
+                    <p className="text-gray-700 font-semibold mt-2">Haz click para ver el video</p>
+                  </a>
+                </div>
+              )}
+
+              <button
+                onClick={handleAddQuestion}
+                className="bg-[#4442c1] hover:bg-[#4332a3] text-white px-6 py-3 rounded-md font-semibold shadow-lg mt-4"
+              >
+                Añadir Pregunta
+              </button>
+
+              {/* Contenedor con flex para alinear el texto y el botón en una misma línea */}
+              <div className="flex items-center gap-4 mt-4">
                 <button
-                  onClick={handleAddQuestion}
-                  className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-md font-semibold shadow-lg mt-4"
+                  onClick={() => setShowTimeModal(true)}
+                  className="bg-[#4dcfec] hover:bg-[#4fb1c7] text-white px-6 py-3 rounded-md font-semibold shadow-lg"
                 >
-                  Añadir Pregunta
+                  {sectionData.totalTime ? "Editar Tiempo" : "Añadir Tiempo"}
                 </button>
 
-                {/* Contenedor con flex para alinear el texto y el botón en una misma línea */}
-                <div className="flex items-center gap-4 mt-4">
-                  <button
-                    onClick={() => setShowTimeModal(true)}
-                    className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md font-semibold shadow-lg"
-                  >
-                    {sectionData.totalTime ? "Editar Tiempo" : "Añadir Tiempo"}
-                  </button>
-
-                  <p className="text-gray-700 text-lg font-semibold">
-                    Tiempo de la sección: {sectionData.totalTime ? `${sectionData.totalTime} min` : "No asignado"}
-                  </p>
-                </div>
-
-
-
+                <p className="text-gray-700 text-lg font-semibold">
+                  Tiempo de la sección: {sectionData.totalTime ? `${sectionData.totalTime} min` : "No asignado"}
+                </p>
               </div>
+            </div>
+
             </>
           )}
 
@@ -508,8 +511,8 @@ function CreateQuestion() {
                 {questions.map((question, index) => (
                     <li key={index} className="bg-gray-100 p-4 rounded-lg mt-4">
                       <p className="font-semibold">Pregunta {index + 1}) {question.statement}</p>
-                      <p className="text-gray-600">Tipo: {question.type}</p>
-                      <p className="text-gray-600">Puntaje: {question.score}</p>
+                      <p className="text-[#1d293f]">Tipo: {question.type}</p>
+                      <p className="text-[#1d293f]">Puntaje: {question.score}</p>
 
                       {question.imageUrl && (
                         <img
@@ -538,13 +541,13 @@ function CreateQuestion() {
                         <div className="mt-4 flex justify-between">
                           <button
                             onClick={() => handleEditQuestion(question)}
-                            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md"
+                            className="bg-[#8acfdf] hover:bg-[#76adb9] text-white px-4 py-2 rounded-md"
                           >
                             Editar
                           </button>
                           <button
                             onClick={() => handleDeleteQuestion(question.id)}
-                            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+                            className="bg-[#244364] hover:bg-[#1a3149] text-white px-4 py-2 rounded-md"
                           >
                             Eliminar
                           </button>
@@ -566,7 +569,7 @@ function CreateQuestion() {
                           </h2>
 
                           {/* Tipo de Pregunta */}
-                          <label className="block text-gray-700 font-semibold mb-2">Tipo de pregunta:</label>
+                          <label className="block text-[#1d293f] font-semibold mb-2">Tipo de pregunta:</label>
                           <select 
                             onChange={handleQuestionTypeChange} 
                             value={questionType} 
@@ -616,7 +619,7 @@ function CreateQuestion() {
                               ))}
                               <button 
                                 onClick={handleAddOption} 
-                                className="bg-blue-500 text-white px-3 py-2 rounded-md mb-6"
+                                className="bg-[#49c9e6] text-white px-3 py-2 rounded-md mb-6"
                               >
                                 Agregar Opción
                               </button>
@@ -656,7 +659,7 @@ function CreateQuestion() {
                             )}
 
                           {/* Puntaje */}
-                          <label className="block text-gray-700 font-semibold mb-2">Puntaje:</label>
+                          <label className="block text-[#1d293f] font-semibold mb-2">Puntaje:</label>
                           <input
                             type="number"
                             value={score}
@@ -666,7 +669,7 @@ function CreateQuestion() {
                           />
 
                           {/* Campo para subir la imagen */}
-                          <label className="block text-gray-700 font-semibold mb-2">Imagen (Opcional):</label>
+                          <label className="block text-[#1d293f] font-semibold mb-2">Imagen (Opcional):</label>
                           <div className="flex items-center gap-4">
                             <input
                               type="file"
@@ -696,7 +699,7 @@ function CreateQuestion() {
                           {imageFile && (
                             <button
                               onClick={handleUploadImage} // Función que sube la imagen
-                              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"
+                              className="mt-2 bg-[#4442c1] text-white px-4 py-2 rounded-md"
                             >
                               Añadir Imagen
                             </button>
@@ -705,13 +708,13 @@ function CreateQuestion() {
                           <div className="flex justify-between mt-4">
                             <button
                               onClick={handleCloseModal}
-                              className="bg-red-500 text-white px-4 py-2 rounded-md "
+                              className="bg-[#244364] text-white px-4 py-2 rounded-md "
                             >
                               Cancelar
                             </button>
                             <button
                               onClick={handleSubmitQuestion} // Llama a la función para guardar la pregunta
-                              className="bg-green-500 text-white px-4 py-2 rounded-md"
+                              className="bg-[#4dcfec] text-white px-4 py-2 rounded-md"
                             >
                               Guardar
                             </button>

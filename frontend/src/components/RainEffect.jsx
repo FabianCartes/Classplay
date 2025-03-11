@@ -13,25 +13,23 @@ const RainEffect = () => {
       init={particlesInit}
       options={{
         fullScreen: { enable: true, zIndex: 0 },
-        background: { color: "#CFE2F3" }, // Azul pastel claro
+        background: { color: "#8EC3E8" }, // 🔹 Azul celeste más intenso
         particles: {
-          number: { value: 200 },
+          number: { value: 180 },
           move: { 
             enable: true,
             direction: "bottom",
-            speed: 0.5,
+            speed: 0.4,
             straight: false,
             random: false,
           },
           shape: { type: "circle" },
           size: { value: { min: 2, max: 4 } },
-          opacity: { value: 0.8 }, // Un poco más transparente para suavidad
-          color: { value: "#7A9EB1" }, // Azul pastel ligeramente más oscuro
-          stroke: { width: 1, color: "#5D8192" }, // Un borde sutil para mejor visibilidad
+          opacity: { value: 0.7 }, // 🔹 Un poco menos translúcido
+          color: { value: ["#497D99", "#2C5A75"] }, // 🔹 Azul medio y celeste oscuro
+          stroke: { width: 1, color: "#497D99" }, // 🔹 Bordes azul más oscuro
         }
       }}
-      
-  
     />
   );
 };

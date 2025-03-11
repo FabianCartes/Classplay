@@ -89,12 +89,12 @@ function CreateCourse() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-100 via-blue-50 to-gray-200 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-r from-[#6d90bd] via-[#7fb2d6] to-[#76bde4] text-[#1d293f]">
       <header className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <button
             onClick={handleBack}
-            className="text-blue-600 hover:text-blue-800 font-semibold flex items-center"
+            className="text-[#00A8CC] hover:text-[#00A8CC] font-semibold flex items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +108,7 @@ function CreateCourse() {
             </svg>
             Atrás
           </button>
-          <h1 className="text-2xl font-bold text-gray-700">Crear Nuevo Curso</h1>
+          <h1 className="text-2xl font-bold text-[#1d293f]">Crear Nuevo Curso</h1>
           <nav>
             <button
               onClick={handleLogout}
@@ -119,15 +119,15 @@ function CreateCourse() {
           </nav>
         </div>
       </header>
-
+  
       <main className="max-w-4xl mx-auto py-10">
-        <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">
+        <h2 className="text-3xl font-bold text-center text-[#1d293f] mb-6">
           Configuración de Curso
         </h2>
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg space-y-6">
           {/* Título del Curso */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2" htmlFor="title">
+            <label className="block text-[#1d293f] font-semibold mb-2" htmlFor="title">
               Título del Curso
             </label>
             <input
@@ -136,15 +136,15 @@ function CreateCourse() {
               name="title"
               value={courseData.title}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#d1d9e6] rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
               placeholder="Escribe el título del curso"
               required
             />
           </div>
-
+  
           {/* Descripción */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2" htmlFor="description">
+            <label className="block text-[#1d293f] font-semibold mb-2" htmlFor="description">
               Descripción del Curso
             </label>
             <textarea
@@ -152,16 +152,16 @@ function CreateCourse() {
               name="description"
               value={courseData.description}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#d1d9e6] rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
               placeholder="Describe el contenido del curso"
               rows="9"
               required
             ></textarea>
           </div>
-
+  
           {/* Categoría */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2" htmlFor="category">
+            <label className="block text-[#1d293f] font-semibold mb-2" htmlFor="category">
               Categoría
             </label>
             <select
@@ -169,7 +169,7 @@ function CreateCourse() {
               name="category"
               value={courseData.category}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#d1d9e6] rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
             >
               <option value="Tecnología">Tecnología</option>
               <option value="Ciencias">Ciencias</option>
@@ -179,11 +179,11 @@ function CreateCourse() {
               <option value="Seguridad">Seguridad</option>
             </select>
           </div>
-
+  
           {/* Fechas */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 font-semibold mb-2" htmlFor="startDate">
+              <label className="block text-[#1d293f] font-semibold mb-2" htmlFor="startDate">
                 Fecha de Inicio
               </label>
               <input
@@ -192,12 +192,12 @@ function CreateCourse() {
                 name="startDate"
                 value={courseData.startDate}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-[#d1d9e6] rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-semibold mb-2" htmlFor="endDate">
+              <label className="block text-[#1d293f] font-semibold mb-2" htmlFor="endDate">
                 Fecha de Fin
               </label>
               <input
@@ -206,24 +206,24 @@ function CreateCourse() {
                 name="endDate"
                 value={courseData.endDate}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-[#d1d9e6] rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
                 required
               />
             </div>
           </div>
-
+  
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md font-semibold shadow-lg"
+              className="bg-[#00A8CC] hover:bg-[#00A8CC] text-white px-6 py-3 rounded-md font-semibold shadow-lg"
             >
               Crear Curso
             </button>
           </div>
         </form>
       </main>
-
-      <footer className="text-center py-4 bg-gray-800 text-gray-400">
+  
+      <footer className="text-center py-4 bg-[#0A1F44] text-[#d1d9e6] mt-10">
         © {new Date().getFullYear()} Mi Aplicación. Todos los derechos reservados.
       </footer>
     </div>

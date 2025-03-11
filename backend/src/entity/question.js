@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 import Section from "./section.js";
-import Option from "./option.js"; // Asegúrate de importar Option
+import Option from "./option.js"; // Importar correctamente
 
 const Question = new EntitySchema({
   name: "Question",
@@ -10,25 +10,31 @@ const Question = new EntitySchema({
       primary: true,
       type: "int",
       generated: true,
+      unsigned: true, // Claves primarias sin signo en MySQL
     },
     type: {
-      type: "varchar", // Tipo de pregunta: 'alternativa', 'verdadero_falso'
+      type: "varchar",
+      length: 50, // Tipo de pregunta: 'alternativa', 'verdadero_falso'
       nullable: false,
     },
     statement: {
-      type: "text", // Enunciado de la pregunta
+      type: "varchar",
+      length: 1000, // Mejor rendimiento en MySQL que "text"
       nullable: false,
     },
     score: {
-      type: "int", // Puntaje asignado a la pregunta
+      type: "int",
+      unsigned: true, // El puntaje no debe ser negativo
       default: 0,
     },
     imageUrl: {
-      type: "varchar", // URL de una imagen asociada (opcional)
+      type: "varchar",
+      length: 500, // URL de imagen (opcional)
       nullable: true,
     },
     videoUrl: {
-      type: "varchar", // URL de un video asociado (opcional)
+      type: "varchar",
+      length: 500, // URL de video (opcional)
       nullable: true,
     },
   },
@@ -41,9 +47,9 @@ const Question = new EntitySchema({
     },
     options: {
       target: Option,
-      type: "one-to-many", // Relación uno a muchos
-      inverseSide: "question", // Nombre del lado inverso en la entidad Option
-      cascade: true, // Para permitir cascada de operaciones
+      type: "one-to-many", // Una pregunta tiene muchas opciones
+      inverseSide: "question", // Relación inversa en la entidad Option
+      cascade: true, // Propagar operaciones (crear, eliminar)
     },
   },
 });

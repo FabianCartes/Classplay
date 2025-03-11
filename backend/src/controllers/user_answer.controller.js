@@ -1,5 +1,5 @@
 import userAnswerService from "../services/user_answer.service.js";
-const { saveUserAnswer, getUserAnswers, getUserAnswersBySection } = userAnswerService;
+const { saveUserAnswer, getUserAnswers, getUserAnswersBySection, getTopUsersByCourse } = userAnswerService;
 
 const saveUserAnswerController = async (req, res) => {
   try {
@@ -70,8 +70,31 @@ const getUserAnswersBySectionController = async (req, res) => {
   }
 };
 
+// 🎯 Obtener Top de Usuarios por Curso
+const getTopUsersByCourseController = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    if (!courseId) {
+      return res.status(400).json({ message: "Course ID requerido." });
+    }
+
+    const topUsers = await getTopUsersByCourse(courseId);
+
+    if (topUsers.error) {
+      return res.status(404).json({ message: topUsers.error });
+    }
+
+    return res.status(200).json(topUsers);
+  } catch (error) {
+    console.error("Error en getTopUsersByCourseController:", error);
+    return res.status(500).json({ message: "Error al obtener el top de usuarios." });
+  }
+};
+
 export default {
   saveUserAnswerController,
   getUserAnswersController,
   getUserAnswersBySectionController,
+  getTopUsersByCourseController,
 };

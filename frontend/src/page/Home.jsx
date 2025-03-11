@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2"; // Importa SweetAlert2
 import AuthContext from "../context/AuthContext";
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 function HomeNormal() {
   const { logout, user } = useContext(AuthContext); // Usamos el método logout del contexto
@@ -126,8 +127,18 @@ function HomeNormal() {
               key={course.id}
               className="p-4 border border-gray-300 rounded-lg bg-gray-50 shadow-sm"
             >
-              <h4 className="text-xl font-bold text-gray-700">{course.title}</h4>
-              <p className="text-gray-600">{course.description}</p>
+              {/* Renderiza el título con formato HTML */}
+              <h4
+                className="text-xl font-bold text-gray-700"
+                dangerouslySetInnerHTML={{ __html: course.title }}
+              />
+              
+              {/* Renderiza la descripción con formato HTML */}
+              <div
+                className="ql-editor text-gray-600"
+                dangerouslySetInnerHTML={{ __html: course.description }}
+              />
+          
               <div className="mt-2">
                 <span
                   className={`text-sm font-semibold ${
@@ -138,25 +149,25 @@ function HomeNormal() {
                   <span className="font-normal">(11:59PM)</span>
                 </span>
               </div>
-  
+          
               {activeTab !== "enrolled" && (
                 <p className="text-sm text-gray-500">
                   Creado por: <strong>{course.createdBy?.username || "Desconocido"}</strong>
                 </p>
               )}
-  
+          
               {activeTab === "available" && (
                 <div className="flex justify-end mt-4">
                   {isEnrolled ? (
                     <button
-                      className="bg-green-500 text-white px-6 py-3 rounded-md font-semibold shadow-lg cursor-not-allowed"
+                      className="bg-[#00A8CC] text-white px-6 py-3 rounded-md font-semibold shadow-lg cursor-not-allowed"
                       disabled
                     >
                       Ya estás inscrito
                     </button>
                   ) : (
                     <button
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md font-semibold shadow-lg"
+                      className="bg-[#00A8CC] hover:bg-[#3691a5] text-white px-6 py-3 rounded-md font-semibold shadow-lg"
                       onClick={() => handleEnrollConfirm(course)}
                     >
                       Inscribirme
@@ -164,17 +175,17 @@ function HomeNormal() {
                   )}
                 </div>
               )}
-  
+          
               {activeTab === "enrolled" && (
                 <div className="flex justify-between mt-4">
                   <button
-                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-semibold shadow-lg"
+                    className="bg-[#00A8CC] hover:bg-[#3691a5] text-white px-4 py-2 rounded-md font-semibold shadow-lg"
                     onClick={() => navigate(`/Course/${course.id}`)}
                   >
                     Entrar
                   </button>
                   <button
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-semibold shadow-lg"
+                    className="bg-[#244364] hover:bg-[#1a3149] text-white px-4 py-2 rounded-md font-semibold shadow-lg"
                     onClick={() => handleUnenrollConfirm(course.id)}
                   >
                     Desinscribirme
@@ -183,6 +194,7 @@ function HomeNormal() {
               )}
             </li>
           );
+          
         })}
       </ul>
     ) : (
@@ -302,75 +314,162 @@ function HomeNormal() {
       Swal.fire("Error", "No se pudo completar la desinscripción.", "error");
     }
   };
-  
-  
 
+  const getRemainingDays = (endDate) => {
+    const today = new Date();
+    const end = new Date(endDate);
+    const diffTime = end - today;  // Diferencia en milisegundos
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Convertir a días
+    return diffDays;
+  };
+
+  const handleReturnToAdmin = () => {
+    // Redirige a la página de administración
+    navigate('/HomeMod');
+  };
+  
+  
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-100 via-blue-100 to-gray-200 text-gray-800">
-      <header className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-700">
-            Bienvenido a tu portal de cursos
-          </h1>
-          <nav>
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-semibold"
-            >
-              Cerrar Sesión
-            </button>
-          </nav>
-        </div>
-      </header>
-
-      <main className="px-6 py-10">
-        <h2 className="text-4xl font-bold mb-6 text-center text-gray-700">
-          Bienvenido, {user?.username} 👋
-        </h2>
-        <p className="text-xl mb-10 text-center text-gray-600">
-          Aquí puedes gestionar tus cursos.
-        </p>
-
-        <div className="flex border-b border-gray-300 mb-6">
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-[#6d90bd] via-[#7fb2d6] to-[#76bde4] text-[#1d293f]">
+       <header className="bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-[#0A1F44]">
+          Bienvenido a tu portal de cursos
+        </h1>
+        <nav className="flex items-center space-x-4">
           <button
-            className={`px-6 py-3 font-semibold ${
-              activeTab === "available"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-gray-500"
-            }`}
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-semibold"
+          >
+            Cerrar Sesión
+          </button>
+
+          {user?.role === 'moderador' && (
+            <button
+              onClick={handleReturnToAdmin}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-semibold"
+            >
+              Volver a Administrar 👨‍💻
+            </button>
+          )}
+        </nav>
+      </div>
+    </header>
+  
+      <main className="flex-1 px-6 py-10">
+        <div className="relative bg-white bg-opacity-10 p-8 rounded-lg shadow-2xl max-w-3xl mx-auto text-center backdrop-blur-sm
+                transition-all duration-300 ease-in-out hover:scale-105 hover:bg-opacity-20">
+          <h2 className="text-5xl font-extrabold text-white drop-shadow-lg">
+            ¡Hola, {user?.username}! 👋
+          </h2>
+          <p className="text-lg text-[#fafbfc] mt-4">
+            Bienvenido a tu portal de aprendizaje. Aquí puedes gestionar tus cursos y seguir aprendiendo cada día. 📚
+          </p>
+        </div>
+  
+        <div className="flex border-b border-[#3b475a] mb-6">
+          <button
+            className={`relative px-6 py-3 font-semibold transition-all duration-300
+              ${activeTab === "available"
+                ? "text-white bg-[#26709b] shadow-md rounded-t-lg before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[#26709b] before:rounded-t-lg before:opacity-30 before:-z-10"
+                : "text-[#3b485a] hover:text-[#26709b]"}`}
             onClick={() => setActiveTab("available")}
           >
             Cursos Disponibles
           </button>
           <button
-            className={`px-6 py-3 font-semibold ${
-              activeTab === "enrolled"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-gray-500"
-            }`}
+            className={`relative px-6 py-3 font-semibold transition-all duration-300
+              ${activeTab === "enrolled"
+                ? "text-white bg-[#26709b] shadow-md rounded-t-lg before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[#26709b] before:rounded-t-lg before:opacity-30 before:-z-10"
+                : "text-[#3b485a] hover:text-[#26709b]"}`}
             onClick={() => setActiveTab("enrolled")}
           >
             Cursos Inscritos
           </button>
         </div>
-
-        {activeTab === "available" && (
-          <section className="bg-white text-gray-800 p-6 rounded-lg shadow-lg">
-            {renderCourses(courses)}
-          </section>
-        )}
-        {activeTab === "enrolled" && (
-          <section className="bg-white text-gray-800 p-6 rounded-lg shadow-lg">
-            {renderCourses(enrolledCourses)}
-          </section>
-        )}
+  
+        <div className="transition-opacity duration-500 ease-in-out">
+          {activeTab === "available" && (
+            <section className="bg-white text-[#1d293f] p-6 rounded-lg shadow-lg">
+              {courses.length > 0 ? (
+                <ul className="space-y-4">
+                  {courses.map((course) => {
+                    const remainingDays = getRemainingDays(course.endDate);
+                    const isWarning = remainingDays === 1;
+                    const isEnrolled = enrolledCourses.some(enrolledCourse => enrolledCourse.id === course.id); // Verifica si ya estás inscrito en el curso
+  
+                    return (
+                      <li key={course.id} className="p-4 border border-gray-300 rounded-lg bg-[#f8fbff] shadow-md">
+                        {/* Renderiza el título con formato HTML */}
+                        <h4
+                          className="text-xl font-bold text-[#0A1F44] break-words"
+                          dangerouslySetInnerHTML={{ __html: course.title }}
+                        />
+  
+                        {/* Renderiza la descripción con formato HTML */}
+                        <div
+                          className="ql-editor"
+                          dangerouslySetInnerHTML={{ __html: course.description }}
+                        />
+  
+                        <p
+                          className={`text-sm ${isWarning ? "text-red-600" : "text-gray-500"} flex justify-end items-center mt-2`}
+                        >
+                          {isWarning && <FaExclamationTriangle className="mr-2 text-red-600" />}
+                          <span>
+                            Fecha de Término: {new Date(course.endDate).toLocaleDateString("es-ES")}{" "}
+                            <span>(11:59PM)</span>
+                          </span>
+                        </p>
+  
+                        <p className="text-sm text-gray-500">
+                          Creado por: <strong>{course.createdBy?.username || "Desconocido"}</strong>
+                        </p>
+  
+                        <div className="flex items-center justify-between mt-4">
+                          <div className="flex flex-col md:flex-row space-y-2 md:space-x-4 md:space-y-0">
+                            {isEnrolled ? (
+                              <button
+                                className="bg-[#00A8CC] text-white px-4 py-2 rounded-md cursor-not-allowed"
+                                disabled
+                              >
+                                Ya estás inscrito
+                              </button>
+                            ) : (
+                              <button
+                                className="bg-[#00A8CC] hover:bg-[#3691a5] text-white px-4 py-2 rounded-md"
+                                onClick={() => handleEnrollConfirm(course)}
+                              >
+                                Inscribirme
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p className="text-gray-600">No hay cursos disponibles.</p>
+              )}
+            </section>
+          )}
+          {activeTab === "enrolled" && (
+            <section className="bg-white text-[#1d293f] p-6 rounded-lg shadow-lg">
+              {renderCourses(enrolledCourses)}
+            </section>
+          )}
+        </div>
       </main>
-
-      <footer className="text-center py-4 bg-gray-800 text-gray-400 mt-10">
+  
+      <footer className="text-center py-4 bg-[#0A1F44] text-[#d1d9e6]">
         © {new Date().getFullYear()} Mi Aplicación. Todos los derechos reservados.
       </footer>
     </div>
   );
+  
+  
+  
 }
 
 export default HomeNormal;

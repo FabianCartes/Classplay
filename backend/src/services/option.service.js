@@ -4,11 +4,13 @@ import { AppDataSource } from "../data-source.js";
 // 🔹 Crear opciones para una pregunta
 const createOption = async (optionData) => {
   try {
-    const { text, isCorrect, questionId } = optionData;
+    let { text, isCorrect, questionId } = optionData;
 
     if (!text || isCorrect === undefined || !questionId) {
       throw new Error("Faltan campos obligatorios.");
     }
+
+    questionId = parseInt(questionId, 10); // Convertir a entero
 
     const optionRepository = AppDataSource.getRepository(Option);
     const newOption = optionRepository.create({ text, isCorrect, question: { id: questionId } });
@@ -20,9 +22,12 @@ const createOption = async (optionData) => {
   }
 };
 
+
 // 🔹 Obtener todas las opciones de una pregunta
 const getOptionsByQuestion = async (questionId) => {
   try {
+    questionId = parseInt(questionId, 10); // Convertir a entero
+
     const optionRepository = AppDataSource.getRepository(Option);
     return await optionRepository.find({ where: { question: { id: questionId } } });
   } catch (error) {
@@ -31,9 +36,12 @@ const getOptionsByQuestion = async (questionId) => {
   }
 };
 
+
 // 🔹 Actualizar una opción
 const updateOption = async (id, optionData) => {
   try {
+    id = parseInt(id, 10); // Convertir a entero
+
     const optionRepository = AppDataSource.getRepository(Option);
     const option = await optionRepository.findOne({ where: { id } });
 
@@ -49,9 +57,12 @@ const updateOption = async (id, optionData) => {
   }
 };
 
+
 // 🔹 Eliminar una opción
 const deleteOption = async (id) => {
   try {
+    id = parseInt(id, 10); // Convertir a entero
+
     const optionRepository = AppDataSource.getRepository(Option);
     const result = await optionRepository.delete(id);
 
@@ -65,5 +76,6 @@ const deleteOption = async (id) => {
     return { error: error.message };
   }
 };
+
 
 export default { createOption, getOptionsByQuestion, updateOption, deleteOption };

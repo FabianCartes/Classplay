@@ -72,4 +72,33 @@ const getUserAnswersBySection = async (userId, sectionId) => {
   }
 };
 
-export default { saveUserAnswer, getUserAnswers, getUserAnswersBySection };
+// ✅ Obtener Top de Usuarios por Curso
+const getTopUsersByCourse = async (courseId) => {
+  try {
+    const userAnswerRepository = AppDataSource.getRepository(UserAnswer);
+
+    const topUsers = await userAnswerRepository
+      .createQueryBuilder("userAnswer")
+      .innerJoin("userAnswer.user", "user")
+      .innerJoin("userAnswer.option", "option")
+      .innerJoin("userAnswer.question", "question")
+      .innerJoin("question.section", "section")
+      .innerJoin("section.course", "course")
+      .select("user.id", "userId")
+      .addSelect("user.username", "username")
+      .addSelect("SUM(question.score)", "totalScore")
+      .where("course.id = :courseId", { courseId })
+      .andWhere("option.isCorrect = :isCorrect", { isCorrect: true }) // ✅ Solucionado
+      .groupBy("user.id")
+      .orderBy("totalScore", "DESC")
+      .getRawMany();
+
+    return topUsers;
+  } catch (error) {
+    console.error("Error al obtener el top de usuarios:", error);
+    return { error: error.message };
+  }
+};
+
+
+export default { saveUserAnswer, getUserAnswers, getUserAnswersBySection, getTopUsersByCourse };

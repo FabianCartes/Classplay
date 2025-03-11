@@ -19,6 +19,9 @@ function Register() {
   const navigate = useNavigate();
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  
+  // Estado para el toast de éxito
+  const [showToast, setShowToast] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +32,12 @@ function Register() {
 
     const success = await register(email, username, password);
     if (success) {
-      navigate("/login");
+      // Mostrar el toast y redirigir al login después de un tiempo
+      setShowToast(true);
+      setTimeout(() => {
+        setShowToast(false); // Ocultar el toast
+        navigate("/login");  // Redirigir a la página de login
+      }, 3000); // El toast se muestra durante 3 segundos
     } else {
       alert("Error al registrar el usuario");
     }
@@ -44,26 +52,33 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-500">
-      <header className="w-full bg-white text-zinc-800 py-4 text-center text-xl font-bold shadow-2xl">
-        Mi Página Web
+    <div className="min-h-screen bg-gradient-to-r from-[#142850] to-[#00A8CC] flex flex-col">
+      <header className="w-full bg-white text-[#142850] py-4 text-center text-xl font-bold shadow-md">
+        Classplay
       </header>
-  
-      <div className="flex flex-col md:flex-row-reverse items-center justify-center min-h-screen px-6 space-y-6 md:space-y-0 md:space-x-6">
-        
-        {/* Sección de registro */}
-        <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow-2xl max-w-md order-first md:order-none mt-6 md:mt-0">
-          <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Regístrate</h2>
+
+      {/* Toast de éxito centrado */}
+      {showToast && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-green-500 text-white text-lg p-4 rounded-md shadow-lg animate-bounce">
+            <p>¡Te has registrado con éxito!</p>
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-col items-center justify-center min-h-screen px-6 py-8">
+        <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-2xl">
+          <h2 className="text-3xl font-bold text-center mb-6 text-[#00A8CC]">Regístrate</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
               <input
                 id="email"
                 type="email"
-                placeholder="Ingresa tu correo electrónico"
+                placeholder="Ingresa tu correo"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
               />
             </div>
             <div>
@@ -74,7 +89,7 @@ function Register() {
                 placeholder="Ingresa tu usuario"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
               />
             </div>
             <div>
@@ -85,7 +100,7 @@ function Register() {
                 placeholder="Ingresa tu contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
               />
             </div>
             <div>
@@ -96,68 +111,20 @@ function Register() {
                 placeholder="Confirma tu contraseña"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#00A8CC] focus:border-[#00A8CC]"
               />
             </div>
-            <button type="submit" className="w-full py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700">
+            <button type="submit" className="w-full py-3 bg-[#00A8CC] text-white rounded-md font-semibold hover:bg-[#0C7B93] transition duration-300">
               Regístrate
             </button>
           </form>
           <p className="mt-6 text-center text-sm text-gray-600">
-            ¿Ya tienes una cuenta? <a href="/login" className="text-blue-500 hover:underline">Inicia sesión aquí</a>
+            ¿Ya tienes una cuenta? <a href="/login" className="text-[#142850] hover:underline">Inicia sesión aquí</a>
           </p>
-        </div>
-  
-        {/* Sección de videos */}
-        <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
-          <div className="relative w-full max-w-lg overflow-hidden">
-            <AnimatePresence mode="wait">
-              {isPlaying && (
-                <motion.div
-                  key={videos[currentVideo].src}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-full"
-                >
-                  <video
-                    key={videos[currentVideo].src}
-                    className="rounded-lg shadow-lg w-full h-auto"
-                    autoPlay
-                    muted
-                    loop={false}
-                    onEnded={nextVideo}
-                  >
-                    <source src={videos[currentVideo].src} type="video/mp4" />
-                    Tu navegador no soporta videos.
-                  </video>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-  
-          {/* Indicadores de video y texto */}
-          <div className="w-full flex flex-col items-center mt-4">
-            <div className="flex space-x-2">
-              {videos.map((_, index) => (
-                <div
-                  key={index}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentVideo ? "bg-white scale-125" : "bg-gray-400"
-                  }`}
-                />
-              ))}
-            </div>
-            <p className="mt-4 text-lg font-semibold text-white text-center">
-              {videos[currentVideo].text}
-            </p>
-          </div>
         </div>
       </div>
     </div>
   );
-  
 }
 
 export default Register;

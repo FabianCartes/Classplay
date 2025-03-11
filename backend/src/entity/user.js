@@ -7,27 +7,31 @@ const User = new EntitySchema({
     id: {
       primary: true,
       type: "int",
-      generated: true
+      generated: true,
+      unsigned: true, // Clave primaria sin signo
     },
     username: {
       type: "varchar",
-      nullable: false
+      length: 255, // Longitud máxima para el nombre de usuario
+      nullable: false,
     },
     email: {
       type: "varchar",
-      unique: true,
-      nullable: false
+      length: 255, // Longitud máxima para el correo
+      unique: true, // Aseguramos que no haya correos duplicados
+      nullable: false,
     },
     password: {
       type: "varchar",
-      nullable: false
+      length: 255, // Longitud para la contraseña (puede variar según cómo la guardes)
+      nullable: false,
     },
     role: {
-      type: "varchar",
-      default: "user",
-      enum: ["user","moderador"]
-    }
-  }
+      type: "enum",
+      enum: ["user", "moderador"], // Roles posibles
+      default: "user", // Valor predeterminado
+    },
+  },
 });
 
 export default User;

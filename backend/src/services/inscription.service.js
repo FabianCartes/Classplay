@@ -10,6 +10,10 @@ const enrollUserInCourse = async (userId, courseId) => {
     const userRepository = AppDataSource.getRepository(User);
     const courseRepository = AppDataSource.getRepository(Course);
 
+    // Convertir a enteros
+    userId = parseInt(userId, 10);
+    courseId = parseInt(courseId, 10);
+
     // Verificar si el usuario existe
     const user = await userRepository.findOne({ where: { id: userId } });
     if (!user) {
@@ -38,6 +42,7 @@ const enrollUserInCourse = async (userId, courseId) => {
     return { error: error.message };
   }
 };
+
 
 // Obtener los cursos en los que está inscrito un usuario
 const getUserInscriptions = async (userId) => {
@@ -76,7 +81,10 @@ const unenrollUserFromCourse = async (userId, courseId) => {
   try {
     const inscriptionRepository = AppDataSource.getRepository(Inscription);
 
-    const result = await inscriptionRepository.delete({ userId, courseId });
+    const result = await inscriptionRepository.delete({
+      userId: parseInt(userId, 10),
+      courseId: parseInt(courseId, 10),
+    });
 
     if (result.affected === 0) {
       return { error: "Inscripción no encontrada." };
@@ -88,5 +96,6 @@ const unenrollUserFromCourse = async (userId, courseId) => {
     return { error: error.message };
   }
 };
+
 
 export default { enrollUserInCourse, getUserInscriptions, getUsersInCourse, unenrollUserFromCourse };

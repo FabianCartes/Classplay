@@ -11,10 +11,11 @@ const UserAnswer = new EntitySchema({
       primary: true,
       type: "int",
       generated: true,
+      unsigned: true, // Claves primarias sin signo en MySQL
     },
     created_at: {
       type: "timestamp",
-      default: () => "CURRENT_TIMESTAMP",
+      default: () => "CURRENT_TIMESTAMP", // Usamos CURRENT_TIMESTAMP como valor predeterminado
     },
   },
   relations: {
@@ -39,9 +40,10 @@ const UserAnswer = new EntitySchema({
   },
   uniques: [
     {
-      columns: ["user", "question"], // Un usuario solo puede responder una vez por pregunta
+      columns: ["user", "question"], // ✅ Referenciar la relación en lugar de la FK
     },
   ],
+
 });
 
 export default UserAnswer;

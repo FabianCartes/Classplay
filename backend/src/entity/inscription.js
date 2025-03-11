@@ -10,17 +10,20 @@ const Inscription = new EntitySchema({
       primary: true,
       type: "int",
       generated: true,
+      unsigned: true, // IDs sin signo en MySQL
     },
     userId: {
       type: "int",
+      unsigned: true, // Relación con la tabla "users"
       nullable: false,
     },
     courseId: {
       type: "int",
+      unsigned: true, // Relación con la tabla "courses"
       nullable: false,
     },
     createdAt: {
-      type: "timestamp",
+      type: "datetime", // MySQL maneja mejor DATETIME para fechas
       default: () => "CURRENT_TIMESTAMP", // Guarda la fecha de inscripción
     },
   },
@@ -40,7 +43,7 @@ const Inscription = new EntitySchema({
   },
   uniques: [
     {
-      columns: ["userId", "courseId"], // Evita que un usuario se inscriba dos veces en el mismo curso
+      columns: ["userId", "courseId"], // Evita inscripciones duplicadas
     },
   ],
 });
